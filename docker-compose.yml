@@ -1,0 +1,622 @@
+services:
+  naming:
+    build: .
+    image: dictionary-service-naming
+    container_name: naming_service
+    command: python server/naming_service.py
+    ports:
+      - "9001:9001"
+
+  server1:
+    build: .
+    image: dictionary-service-lab4-ipc-only-server
+    container_name: dictionary_server1
+    command: >
+      bash -c "rm -f /dev/shm/dictionary_shm /dev/shm/sem.dictionary_shm && python server/server.py"
+    environment:
+      - NAMING_HOST=naming
+      - NAMING_PORT=9001
+      - INSTANCE_ID=server1
+      - ADVERTISED_HOST=server1
+      - SERVICE_TTL=15
+      - HEARTBEAT_INTERVAL=5
+    ports:
+      - "9000:9000"
+    ipc: host
+    depends_on:
+      - naming
+
+  server2:
+    build: .
+    image: dictionary-service-lab4-ipc-only-server
+    container_name: dictionary_server2
+    command: >
+      bash -c "rm -f /dev/shm/dictionary_shm /dev/shm/sem.dictionary_shm && python server/server.py"
+    environment:
+      - NAMING_HOST=naming
+      - NAMING_PORT=9001
+      - INSTANCE_ID=server2
+      - ADVERTISED_HOST=server2
+      - SERVICE_TTL=15
+      - HEARTBEAT_INTERVAL=5
+    ports:
+      - "9002:9000"
+    ipc: host
+    depends_on:
+      - naming
+
+  client:
+    build: .
+    image: dictionary-service-client
+    container_name: dictionary_client
+    command: python client/client.py
+    environment:
+      - NAMING_HOST=naming
+      - NAMING_PORT=9001
+      - WORD=umuthi
+    depends_on:
+      - naming
+
+  client1:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client1
+    container_name: client1
+    depends_on: [server1]
+    environment:
+      - WORD=umtholampilo
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client2:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client2
+    container_name: client2
+    depends_on: [server1]
+    environment:
+      - WORD=umgomo
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client3:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client3
+    container_name: client3
+    depends_on: [server1]
+    environment:
+      - WORD=i-antibiotic
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client4:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client4
+    container_name: client4
+    depends_on: [server1]
+    environment:
+      - WORD=i-analgesic
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client5:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client5
+    container_name: client5
+    depends_on: [server1]
+    environment:
+      - WORD=i-vithamini
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client6:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client6
+    container_name: client6
+    depends_on: [server1]
+    environment:
+      - WORD=i-dose
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client7:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client7
+    container_name: client7
+    depends_on: [server1]
+    environment:
+      - WORD=imiphumela_emibi
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client8:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client8
+    container_name: client8
+    depends_on: [server1]
+    environment:
+      - WORD=i-pharmacist
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client9:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client9
+    container_name: client9
+    depends_on: [server1]
+    environment:
+      - WORD=i-syrup
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client10:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client10
+    container_name: client10
+    depends_on: [server1]
+    environment:
+      - WORD=i-capsule
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client11:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client11
+    container_name: client11
+    depends_on: [server1]
+    environment:
+      - WORD=i-tablet
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client12:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client12
+    container_name: client12
+    depends_on: [server1]
+    environment:
+      - WORD=i-injection
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client13:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client13
+    container_name: client13
+    depends_on: [server1]
+    environment:
+      - WORD=i-ointment
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client14:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client14
+    container_name: client14
+    depends_on: [server1]
+    environment:
+      - WORD=i-cream
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client15:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client15
+    container_name: client15
+    depends_on: [server1]
+    environment:
+      - WORD=i-suspension
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client16:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client16
+    container_name: client16
+    depends_on: [server1]
+    environment:
+      - WORD=umkhuhlane
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client17:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client17
+    container_name: client17
+    depends_on: [server1]
+    environment:
+      - WORD=i-paracetamol
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client18:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client18
+    container_name: client18
+    depends_on: [server1]
+    environment:
+      - WORD=i-antacid
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client19:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client19
+    container_name: client19
+    depends_on: [server1]
+    environment:
+      - WORD=i-diuretic
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client20:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client20
+    container_name: client20
+    depends_on: [server1]
+    environment:
+      - WORD=i-steroid
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client21:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client21
+    container_name: client21
+    depends_on: [server1]
+    environment:
+      - WORD=i-antiviral
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client22:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client22
+    container_name: client22
+    depends_on: [server1]
+    environment:
+      - WORD=i-antifungal
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client23:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client23
+    container_name: client23
+    depends_on: [server1]
+    environment:
+      - WORD=ukugaya
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client24:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client24
+    container_name: client24
+    depends_on: [server1]
+    environment:
+      - WORD=i-antihistamine
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client25:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client25
+    container_name: client25
+    depends_on: [server1]
+    environment:
+      - WORD=i-saline
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client26:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client26
+    container_name: client26
+    depends_on: [server1]
+    environment:
+      - WORD=i-vaccine
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client27:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client27
+    container_name: client27
+    depends_on: [server1]
+    environment:
+      - WORD=umzimba
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client28:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client28
+    container_name: client28
+    depends_on: [server1]
+    environment:
+      - WORD=i-anesthetic
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client29:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client29
+    container_name: client29
+    depends_on: [server1]
+    environment:
+      - WORD=i-schedule
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client30:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client30
+    container_name: client30
+    depends_on: [server1]
+    environment:
+      - WORD=i-overdose
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client31:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client31
+    container_name: client31
+    depends_on: [server1]
+    environment:
+      - WORD=i-addiction
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client32:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client32
+    container_name: client32
+    depends_on: [server1]
+    environment:
+      - WORD=i-herbal
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client33:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client33
+    container_name: client33
+    depends_on: [server1]
+    environment:
+      - WORD=ukuhlolwa_kwegazi
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client34:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client34
+    container_name: client34
+    depends_on: [server1]
+    environment:
+      - WORD=i-prescription
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client35:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client35
+    container_name: client35
+    depends_on: [server1]
+    environment:
+      - WORD=i-over_the_counter
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client36:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client36
+    container_name: client36
+    depends_on: [server1]
+    environment:
+      - WORD=i-clinical_trial
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client37:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client37
+    container_name: client37
+    depends_on: [server1]
+    environment:
+      - WORD=i-generic_drug
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client38:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client38
+    container_name: client38
+    depends_on: [server1]
+    environment:
+      - WORD=i-brand_drug
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client39:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client39
+    container_name: client39
+    depends_on: [server1]
+    environment:
+      - WORD=i-shelf_life
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client40:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client40
+    container_name: client40
+    depends_on: [server1]
+    environment:
+      - WORD=i-expiry_date
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client41:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client41
+    container_name: client41
+    depends_on: [server1]
+    environment:
+      - WORD=i-compound
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client42:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client42
+    container_name: client42
+    depends_on: [server1]
+    environment:
+      - WORD=i-formulation
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client43:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client43
+    container_name: client43
+    depends_on: [server1]
+    environment:
+      - WORD=i-side_effect
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client44:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client44
+    container_name: client44
+    depends_on: [server1]
+    environment:
+      - WORD=i-interaction
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client45:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client45
+    container_name: client45
+    depends_on: [server1]
+    environment:
+      - WORD=i-dispensing
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client46:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client46
+    container_name: client46
+    depends_on: [server1]
+    environment:
+      - WORD=i-counseling
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client47:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client47
+    container_name: client47
+    depends_on: [server1]
+    environment:
+      - WORD=umuthi
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client48:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client48
+    container_name: client48
+    depends_on: [server1]
+    environment:
+      - WORD=umtholampilo
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client49:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client49
+    container_name: client49
+    depends_on: [server1]
+    environment:
+      - WORD=umgomo
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  client50:
+    build: .
+    image: dictionary-service-lab4-ipc-only-client50
+    container_name: client50
+    depends_on: [server1]
+    environment:
+      - WORD=i-antibiotic
+      - HOST=server1
+    command: python client/client.py
+    ipc: host
+
+  dictionary-server:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - SERVER_PORT=8080
+
+  naming-service:
+    build: .
+    ports:
+      - "9090:9090"
+    environment:
+      - NAMING_PORT=9090
